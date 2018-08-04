@@ -1,60 +1,180 @@
-<?php  namespace Grambas\FootballData;
+<?php
+
+namespace Grambas\FootballData;
+
 use GuzzleHttp\Client;
+
 class FootballData
 {
-	protected $client;
-	
-	public function __construct(Client $client )
-	{	
-		$this->client = $client;
-	}
-	//COMPETITION/LEAGUE
-	public function LeagueTable($id, $matchday="")
-	 	{
-		$leagueTable = $this->client->get("competitions/{$id}/leagueTable/?matchday={$matchday}")->getBody();
-		return json_decode($leagueTable);
-	}
-	public function getLeagues($year="")
-	 	{
-		$leagues = $this->client->get("competitions/?season={$year}")->getBody();
-		return json_decode($leagues);
-	}
-	public function  getLeagueTeams($id)
-	 	{
-		$leagueTeams = $this->client->get("competitions/{$id}/teams")->getBody();
-		return json_decode($leagueTeams);
-	}
-	public function getLeagueFixtures($id, $matchday="", $timeFrame="")
-	 	{
-		$leagueFixtures = $this->client->get("competitions/{$id}/fixtures/?matchday={$matchday}&timeFrame={$timeFrame}")->getBody();
-		return json_decode($leagueFixtures);
-	}
-	//FIXTURES
-	public function getFixture($id, $head="")
-	{	
-		$fixture = $this->client->get( "fixtures/{$id}/?head2head={$head}")->getBody();
-		return json_decode($fixture);
-	}
-	public function getFixturesOfSet($leagueCode="", $timeFrame="")
-	{	
-		$fixtures = $this->client->get( "fixtures/?leagueCode={$leagueCode}&timeFrame={$timeFrame}")->getBody();
-		return json_decode($fixtures);
-	}
-	public function getTeamFixtures($id, $season="", $timeFrame="", $venue="")
-	{
-		$teamFixtures = $this->client->get("teams/{$id}/fixtures/?season={$season}&timeFrame={$timeFrame}&venue={$venue}")->getBody();
-		return json_decode($teamFixtures);
-	}
-	// TEAM
-	public function getTeam($id)
-	{
-		$team = $this->client->get("teams/{$id}")->getBody();
-		return json_decode($team);		
-	}
-	//PLAYERS
-	public function getTeamPlayers($id)
-	{
-		$players = $this->client->get("teams/{$id}/players")->getBody();
-		return json_decode($players); 
-	}
+    /**
+     * GuzzleHttp Client instance.
+     *
+     * @var GuzzleHttp\Client
+     */
+    protected $client;
+
+    /**
+     * FootballData constructor.
+     *
+     * @param Client $client
+     */
+    public function __construct(Client $client)
+    {
+        $this->client = $client;
+    }
+
+    /**
+     * Gets all competitions or a specific one;
+     *
+     * @param int|null $id
+     * @return object
+     */
+    protected function getLeagues(string $id = "", string $area = ""): object
+    {
+        return json_decode($this->client->get("competitions/{$id}/?areas={$area}")->getBody());
+    }
+
+    /**
+     * Gets all teams for a specific competition.
+     *
+     * @param $id
+     * @return object
+     */
+    protected function getLeagueTeams(string $id = "", string $stage = ""): object
+    {
+        return json_decode($this->client->get("competitions/{$id}/teams/?stage={$stage}")->getBody());
+    }
+
+    /**
+     * Gets all availables competitions.
+     *
+     * @param int $area
+     * @return object
+     */
+    public function allCompetitions(string $area = ""): object
+    {
+        return $this->getLeagues("", $area);
+    }
+
+    /**
+     * Gets all matches for a specific competition.
+     * All filters availables with array parameter.
+     *
+     * @param int $id
+     * @param array $filter
+     * @return object
+     */
+    public function allMatches(int $id, array $filter = []): object
+    {
+        $url = "competitions/{$id}/matches/?";
+
+        foreach ($filter as $key => $value) {
+            $url .= "{$key}={$value}&";
+        }
+
+        return json_decode($this->client->get($url)->getBody());
+    }
+
+    /**
+     * All matches for a specific team.
+     * All filters availables with array parameter.
+     *
+     * @param int $id
+     * @param array $filter
+     * @return object
+     */
+    public function allMatchesForTeam(int $id, array $filter): object
+    {
+        $url = "team/{$id}/matches/?";
+
+        foreach ($filter as $key => $value) {
+            $url .= "{$key}={$value}&";
+        }
+
+        return json_decode($this->client->get($url)->getBody());
+    }
+
+    /**
+     * Gets all teams for a specific competition.
+     *
+     * @param int $id
+     * @param string $stage
+     * @return object
+     */
+    public function allTeams(int $id, string $stage = ""): object
+    {
+        return $this->getLeagueTeams($id, $stage);
+    }
+
+    /**
+     * Gets a specific competition.
+     *
+     * @param int $id
+     * @return object
+     */
+    public function findCompetition(int $id): object
+    {
+        return $this->getLeagues($id);
+    }
+
+    /**
+     * Gets standings for a specific competition.
+     *
+     * @param int $id
+     * @return object
+     */
+    public function findStandings(int $id): object
+    {
+        return json_decode($this->client->get("competitions/{$id}/standings")->getBody());
+    }
+
+    /**
+     * All matches with all available filter in array parameter.
+     *
+     * @param array $filter
+     * @return object
+     */
+    public function findFilteredMatch(array $filter): object
+    {
+        $url = "matches/?";
+
+        foreach ($filter as $key => $value) {
+            $url .= "{$key}={$value}&";
+        }
+
+        return json_decode($this->client->get($url)->getBody());
+    }
+
+    /**
+     * Shows one particular match.
+     *
+     * @param int $id
+     * @return object
+     */
+    public function findMatch(int $id): object
+    {
+        return json_decode($this->client->get("matches/{$id}")->getBody());
+    }
+
+    /**
+     * Gets a specific team.
+     *
+     * @param int $id
+     * @return object
+     */
+    public function findTeam(int $id): object
+    {
+        return json_decode($this->client->get("teams/{$id}")->getBody());
+    }
+
+    /**
+     * Gets all squad for a specific team.
+     *
+     * @param int $id
+     * @return array
+     */
+    public function findTeamSquad(int $id): array
+    {
+        return json_decode($this->client->get("teams/{$id}")->getBody())->squad;
+    }
 }
