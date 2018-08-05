@@ -9,7 +9,7 @@ class FootballData
     /**
      * GuzzleHttp Client instance.
      *
-     * @var GuzzleHttp\Client
+     * @var \GuzzleHttp\Client
      */
     protected $client;
 
@@ -26,10 +26,11 @@ class FootballData
     /**
      * Gets all competitions or a specific one;
      *
-     * @param int|null $id
+     * @param string $id
+     * @param string $area
      * @return object
      */
-    protected function getLeagues(string $id = "", string $area = ""): object
+    protected function getLeagues(string $id = "", string $area = ""): \StdClass
     {
         return json_decode($this->client->get("competitions/{$id}/?areas={$area}")->getBody());
     }
@@ -37,10 +38,11 @@ class FootballData
     /**
      * Gets all teams for a specific competition.
      *
-     * @param $id
+     * @param string $id
+     * @param string $stage
      * @return object
      */
-    protected function getLeagueTeams(string $id = "", string $stage = ""): object
+    protected function getLeagueTeams(string $id = "", string $stage = ""): \StdClass
     {
         return json_decode($this->client->get("competitions/{$id}/teams/?stage={$stage}")->getBody());
     }
@@ -48,23 +50,23 @@ class FootballData
     /**
      * Gets all availables competitions.
      *
-     * @param int $area
+     * @param string $area
      * @return object
      */
-    public function allCompetitions(string $area = ""): object
+    public function allCompetitions(string $area = ""): \StdClass
     {
         return $this->getLeagues("", $area);
     }
 
     /**
      * Gets all matches for a specific competition.
-     * All filters availables with array parameter.
+     * All filters available with array parameter.
      *
      * @param int $id
      * @param array $filter
      * @return object
      */
-    public function allMatches(int $id, array $filter = []): object
+    public function allMatches(int $id, array $filter = []): \StdClass
     {
         $url = "competitions/{$id}/matches/?";
 
@@ -77,13 +79,13 @@ class FootballData
 
     /**
      * All matches for a specific team.
-     * All filters availables with array parameter.
+     * All filters available with array parameter.
      *
      * @param int $id
      * @param array $filter
      * @return object
      */
-    public function allMatchesForTeam(int $id, array $filter): object
+    public function allMatchesForTeam(int $id, array $filter): \StdClass
     {
         $url = "team/{$id}/matches/?";
 
@@ -101,7 +103,7 @@ class FootballData
      * @param string $stage
      * @return object
      */
-    public function allTeams(int $id, string $stage = ""): object
+    public function allTeams(int $id, string $stage = ""): \StdClass
     {
         return $this->getLeagueTeams($id, $stage);
     }
@@ -112,7 +114,7 @@ class FootballData
      * @param int $id
      * @return object
      */
-    public function findCompetition(int $id): object
+    public function findCompetition(int $id): \StdClass
     {
         return $this->getLeagues($id);
     }
@@ -123,7 +125,7 @@ class FootballData
      * @param int $id
      * @return object
      */
-    public function findStandings(int $id): object
+    public function findStandings(int $id): \StdClass
     {
         return json_decode($this->client->get("competitions/{$id}/standings")->getBody());
     }
@@ -134,7 +136,7 @@ class FootballData
      * @param array $filter
      * @return object
      */
-    public function findFilteredMatch(array $filter): object
+    public function findFilteredMatch(array $filter): \StdClass
     {
         $url = "matches/?";
 
@@ -151,7 +153,7 @@ class FootballData
      * @param int $id
      * @return object
      */
-    public function findMatch(int $id): object
+    public function findMatch(int $id): \StdClass
     {
         return json_decode($this->client->get("matches/{$id}")->getBody());
     }
@@ -162,7 +164,7 @@ class FootballData
      * @param int $id
      * @return object
      */
-    public function findTeam(int $id): object
+    public function findTeam(int $id): \StdClass
     {
         return json_decode($this->client->get("teams/{$id}")->getBody());
     }
