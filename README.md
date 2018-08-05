@@ -31,11 +31,11 @@ Add to config/app.php
 ```
 
 'providers' => [
-    Grambas\FootballData\FootballDataServiceProvider::class,
+    Football\FootballData\FootballDataServiceProvider::class,
 ]
 
 'aliases' => [
-    'Football' => Grambas\FootballData\Facades\FootballDataFacade::class,
+    'Football' => Football\FootballData\Facades\FootballDataFacade::class,
 ]
 ```
 
