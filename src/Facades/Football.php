@@ -1,11 +1,11 @@
 <?php
 
-namespace Football\FootballData\Facades;
+namespace Football\Football\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 
-class FootballDataFacade extends Facade
+class Football extends Facade
 {
 
     /**

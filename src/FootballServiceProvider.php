@@ -1,12 +1,12 @@
 <?php
 
-namespace Football\FootballData;
+namespace Football\Football;
 
 use App;
 use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 
-class FootballDataServiceProvider extends ServiceProvider
+class FootballServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.

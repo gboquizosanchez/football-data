@@ -1,10 +1,10 @@
 <?php
 
-namespace Football\FootballData;
+namespace Football\Football;
 
 use GuzzleHttp\Client;
 
-class FootballData
+class Football
 {
     /**
      * GuzzleHttp Client instance.
