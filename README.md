@@ -13,7 +13,7 @@
 Via Composer
 
 ``` bash
-$ composer require grambas/football-data dev-master
+$ composer require football/football-data
 ```
 
 ## Usage
