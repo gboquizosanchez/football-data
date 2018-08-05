@@ -32,7 +32,7 @@ class FootballServiceProvider extends ServiceProvider
                     'X-Response-Control' => 'full',
                 ]
             ]);
-            return new FootballData($client);
+            return new Football($client);
         });
     }
 }
