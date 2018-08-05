@@ -1,13 +1,11 @@
 <?php
 
-namespace Football\Football\Facades;
+namespace FootballData\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-
 class Football extends Facade
 {
-
     /**
      * Get the registered name of the component.
      *

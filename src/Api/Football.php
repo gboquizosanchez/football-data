@@ -1,6 +1,6 @@
 <?php
 
-namespace Football\Football;
+namespace FootballData\Api;
 
 use GuzzleHttp\Client;
 

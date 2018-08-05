@@ -25,7 +25,7 @@ More about filters, structure and API in:
 Add your api key to env. file
 
 ```
-FootballData_API_KEY={YOUR_API_KEY}
+FOOTBALLDATA_API_KEY={YOUR_API_KEY}
 ```
 Add to config/app.php 
 ```

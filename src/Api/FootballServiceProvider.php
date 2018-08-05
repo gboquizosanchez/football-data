@@ -1,8 +1,7 @@
 <?php
 
-namespace Football\Football;
+namespace FootballData\Api;
 
-use App;
 use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
 
