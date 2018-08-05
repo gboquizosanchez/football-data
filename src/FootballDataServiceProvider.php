@@ -1,10 +1,10 @@
 <?php
 
-namespace Grambas\FootballData;
+namespace Football\FootballData;
 
-use Illuminate\Support\ServiceProvider;
 use App;
 use GuzzleHttp\Client;
+use Illuminate\Support\ServiceProvider;
 
 class FootballDataServiceProvider extends ServiceProvider
 {

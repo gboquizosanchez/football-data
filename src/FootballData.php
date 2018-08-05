@@ -1,6 +1,6 @@
 <?php
 
-namespace Grambas\FootballData;
+namespace Football\FootballData;
 
 use GuzzleHttp\Client;
 

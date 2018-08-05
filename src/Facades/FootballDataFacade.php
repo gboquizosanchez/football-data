@@ -1,6 +1,6 @@
 <?php
 
-namespace Grambas\FootballData\Facades;
+namespace Football\FootballData\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
