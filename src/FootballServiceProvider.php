@@ -1,6 +1,6 @@
 <?php
 
-namespace FootballData\Api;
+namespace FootballData;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\ServiceProvider;
@@ -28,7 +28,7 @@ class FootballServiceProvider extends ServiceProvider
             $client = new Client([
                 'base_uri' => 'http://api.football-data.org/v2/',
                 'headers' => [
-                    'X-Auth-Token' => getenv('FootballData_API_KEY'),
+                    'X-Auth-Token' => getenv('FOOTBALLDATA_API_KEY'),
                     'X-Response-Control' => 'full',
                 ]
             ]);
